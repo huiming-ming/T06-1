@@ -12,6 +12,7 @@
 
 .axis text {
   fill: #574638;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 11px;
 }
 
@@ -63,4 +64,19 @@
   line-height: 1.5;
   white-space: pre-line;
   box-shadow: 0 4px 14px rgb(0 0 0 / 18%);
+}
+
+.scatter-point {
+  stroke: none;
+}
+
+.scatter-tooltip {
+  pointer-events: none;
+}
+
+.scatter-tooltip text {
+  fill: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
 }

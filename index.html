@@ -13,17 +13,22 @@
 <body>
   <header>
     <div class="page-width">
+      <p class="eyebrow">COS30045 · T06</p>
+
       <h1>TV Energy Consumption Explorer</h1>
+
       <p>
-        Explore the distribution of annual energy consumption
-        across LCD, LED and OLED televisions.
+        Explore TV energy consumption through an interactive
+        histogram and a colour-coded scatterplot.
       </p>
     </div>
   </header>
 
   <main class="page-width">
-    <section class="chart-card" aria-labelledby="chart-heading">
-      <h2 id="chart-heading">Annual TV Energy Consumption</h2>
+    <section class="chart-card" aria-labelledby="histogram-heading">
+      <h2 id="histogram-heading">
+        Annual TV Energy Consumption
+      </h2>
 
       <p>
         Select a screen technology to explore its distribution.
@@ -33,7 +38,7 @@
       <div
         id="filters_screen"
         role="group"
-        aria-label="Filter by screen technology"
+        aria-label="Filter histogram by screen technology"
       ></div>
 
       <p id="chart-summary" role="status" aria-live="polite">
@@ -47,8 +52,31 @@
 
       <p class="chart-note">
         Both axes remain fixed when filtering to support comparison.
-        Hover over a bar, or focus it using the Tab key, to inspect
-        its interval and record count.
+        Hover over a bar, or focus it using the Tab key,
+        to inspect its interval and record count.
+      </p>
+    </section>
+
+    <section class="chart-card" aria-labelledby="scatter-heading">
+      <h2 id="scatter-heading">
+        Energy Consumption and Star Rating
+      </h2>
+
+      <p>
+        Explore the relationship between energy star ratings
+        and annual energy consumption. Colours identify screen
+        technologies. Hover over a point to view its screen size.
+      </p>
+
+      <div
+        id="scatterplot"
+        class="responsive-svg-container"
+      ></div>
+
+      <p class="chart-note">
+        Each point represents one CSV record. Transparency helps
+        reveal overlapping points. The technology buttons above
+        filter the histogram only.
       </p>
     </section>
 
@@ -57,28 +85,34 @@
 
       <p>
         Source: Ex6_TVdata.csv, supplied with the COS30045 T06
-        starter pack. The supplied materials identify the data
-        as downloaded in January 2025.
+        exercise materials. The supplied materials identify
+        the dataset as downloaded in January 2025.
       </p>
 
       <p>
-        Energy consumption is measured in kWh/year.
-        Frequency counts CSV records, not sales or households.
-        Intervals include their lower boundary and exclude their
-        upper boundary, except the final interval, which includes both.
+        Annual energy consumption is measured in kWh/year.
+        Screen size is measured in inches. Frequency counts
+        CSV records, not sales or households.
+      </p>
+
+      <p>
+        Histogram intervals include their lower boundary and
+        exclude their upper boundary, except the final interval,
+        which includes both boundaries.
       </p>
     </section>
   </main>
 
   <footer>
-    <p>COS30045 Data Visualisation · T06 Interactive Histogram</p>
+    <p>COS30045 Data Visualisation · T06 Interactive Charts</p>
   </footer>
 
-  <!-- Load dependencies before the data initialisation script. -->
+  <!-- Load dependencies before initialising the data. -->
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="js/shared-constants.js"></script>
   <script src="js/interactions.js"></script>
   <script src="js/histogram.js"></script>
+  <script src="js/scatterplot.js"></script>
   <script src="js/load-data.js"></script>
 </body>
 </html>

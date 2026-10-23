@@ -4,7 +4,6 @@ const drawHistogram = data => {
 
   if (width <= 0) return;
 
-  // Hide an open tooltip before replacing chart elements.
   hideTooltip();
 
   const root = d3.select(container);
@@ -15,21 +14,27 @@ const drawHistogram = data => {
   innerWidth = width - margin.left - margin.right;
   innerHeight = height - margin.top - margin.bottom;
 
-  // Derive fixed bin boundaries from the complete dataset.
-  const maximumEnergy = d3.max(data, d => d.energyConsumption);
+  // Calculate bin boundaries from the complete dataset.
+  const maximumEnergy = d3.max(
+    data,
+    d => d.energyConsumption
+  );
 
   const upperBound = Math.max(
     binWidth,
     Math.ceil(maximumEnergy / binWidth) * binWidth
   );
 
+  // Reuse these boundaries for all technology filters.
   binGenerator
     .domain([0, upperBound])
-    .thresholds(d3.range(binWidth, upperBound, binWidth));
+    .thresholds(
+      d3.range(binWidth, upperBound, binWidth)
+    );
 
   const allBins = binGenerator(data);
 
-  // Keep the same data domains for every filter.
+  // Keep both axis domains fixed when filtering.
   xScale
     .domain([0, upperBound])
     .range([0, innerWidth]);
@@ -68,7 +73,10 @@ const drawHistogram = data => {
 
   innerChart.append("g")
     .attr("class", "axis x-axis")
-    .attr("transform", `translate(0,${innerHeight})`)
+    .attr(
+      "transform",
+      `translate(0,${innerHeight})`
+    )
     .call(
       d3.axisBottom(xScale)
         .ticks(Math.max(2, Math.floor(innerWidth / 80)))
@@ -98,6 +106,6 @@ const drawHistogram = data => {
     .attr("y", 14)
     .text("Frequency (TV Records)");
 
-  // Preserve the selected technology when resizing.
+  // Preserve the selected filter when the chart resizes.
   updateHistogram(activeFilter, data, false);
 };

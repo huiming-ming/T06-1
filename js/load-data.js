@@ -1,10 +1,11 @@
 // Convert numeric text without treating blanks as zero.
 function parseNumber(value) {
   const text = String(value ?? "").trim();
+
   return text === "" ? NaN : Number(text);
 }
 
-// Load the supplied CSV using its exact column names.
+// Load the CSV using its exact column names.
 d3.csv("data/Ex6_TVdata.csv", d => ({
   brand: String(d.brand ?? "").trim(),
   model: String(d.model ?? "").trim(),
@@ -21,7 +22,9 @@ d3.csv("data/Ex6_TVdata.csv", d => ({
     );
 
     if (!allData.length) {
-      throw new Error("No valid TV energy records were found.");
+      throw new Error(
+        "No valid TV energy records were found."
+      );
     }
 
     console.log("CSV rows:", rows.length);
@@ -37,7 +40,7 @@ d3.csv("data/Ex6_TVdata.csv", d => ({
       }))
     );
 
-    // Create one shared tooltip outside the SVG.
+    // Create the histogram's shared HTML tooltip.
     chartTooltip = d3.select("body")
       .append("div")
       .attr("class", "chart-tooltip")
@@ -45,14 +48,17 @@ d3.csv("data/Ex6_TVdata.csv", d => ({
 
     populateFilters(allData);
 
-    // Render again only when the chart container width changes.
-    let previousWidth = -1;
+    // Watch the histogram container width.
+    let previousHistogramWidth = -1;
 
     resizeObserver = new ResizeObserver(entries => {
       const currentWidth = entries[0].contentRect.width;
 
-      if (currentWidth > 0 && currentWidth !== previousWidth) {
-        previousWidth = currentWidth;
+      if (
+        currentWidth > 0 &&
+        currentWidth !== previousHistogramWidth
+      ) {
+        previousHistogramWidth = currentWidth;
         drawHistogram(allData);
       }
     });
@@ -61,17 +67,39 @@ d3.csv("data/Ex6_TVdata.csv", d => ({
       document.querySelector("#histogram")
     );
 
-    // Prevent a fixed tooltip from remaining visible after scrolling.
+    // Watch the scatterplot container independently.
+    let previousScatterWidth = -1;
+
+    const scatterObserver = new ResizeObserver(entries => {
+      const currentWidth = entries[0].contentRect.width;
+
+      if (
+        currentWidth > 0 &&
+        currentWidth !== previousScatterWidth
+      ) {
+        previousScatterWidth = currentWidth;
+        drawScatterplot(allData);
+      }
+    });
+
+    scatterObserver.observe(
+      document.querySelector("#scatterplot")
+    );
+
+    // Hide the fixed histogram tooltip when scrolling.
     window.addEventListener("scroll", hideTooltip, {
       passive: true
     });
   })
   .catch(error => {
-    console.error("Unable to load the TV histogram:", error);
+    console.error(
+      "Unable to initialise the TV charts:",
+      error
+    );
 
     d3.select("#chart-summary")
       .text(
-        "Unable to display the chart. " +
+        "Unable to display the charts. " +
         "Check the CSV file path and browser console."
       );
   });

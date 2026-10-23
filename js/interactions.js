@@ -52,7 +52,9 @@ const updateHistogram = (filterId, data, animate = true) => {
         .attr("class", "bar")
         .attr("y", innerHeight)
         .attr("height", 0),
+
       update => update,
+
       exit => exit.remove()
     )
     .attr("x", d => xScale(d.x0))
@@ -62,7 +64,7 @@ const updateHistogram = (filterId, data, animate = true) => {
     .attr("tabindex", 0)
     .attr("aria-label", d => describeBin(d, label));
 
-  // Add immediate pointer tooltips.
+  // Show an immediate tooltip when a bar is hovered.
   bars
     .on("pointerenter", (event, d) => {
       showTooltip(describeBin(d, label));
@@ -77,14 +79,19 @@ const updateHistogram = (filterId, data, animate = true) => {
       const box = this.getBoundingClientRect();
 
       showTooltip(describeBin(d, label));
-      positionTooltip(box.left + box.width / 2, box.top);
+      positionTooltip(
+        box.left + box.width / 2,
+        box.top
+      );
     })
     .on("blur", hideTooltip)
     .on("keydown", event => {
-      if (event.key === "Escape") hideTooltip();
+      if (event.key === "Escape") {
+        hideTooltip();
+      }
     });
 
-  // Stop unfinished animations before applying the next update.
+  // Stop an unfinished transition before starting a new one.
   bars.interrupt();
 
   const reduceMotion = window.matchMedia(
@@ -96,14 +103,16 @@ const updateHistogram = (filterId, data, animate = true) => {
       .duration(500)
       .ease(d3.easeCubicInOut)
       .attr("y", d => yScale(d.length))
-      .attr("height", d =>
-        innerHeight - yScale(d.length)
+      .attr(
+        "height",
+        d => innerHeight - yScale(d.length)
       );
   } else {
     bars
       .attr("y", d => yScale(d.length))
-      .attr("height", d =>
-        innerHeight - yScale(d.length)
+      .attr(
+        "height",
+        d => innerHeight - yScale(d.length)
       );
   }
 };
@@ -141,12 +150,18 @@ function positionTooltip(clientX, clientY) {
 
   const left = Math.max(
     8,
-    Math.min(clientX + 12, window.innerWidth - box.width - 8)
+    Math.min(
+      clientX + 12,
+      window.innerWidth - box.width - 8
+    )
   );
 
   const top = Math.max(
     8,
-    Math.min(clientY + 12, window.innerHeight - box.height - 8)
+    Math.min(
+      clientY + 12,
+      window.innerHeight - box.height - 8
+    )
   );
 
   chartTooltip

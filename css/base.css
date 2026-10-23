@@ -38,8 +38,8 @@ header h1 {
 }
 
 header p {
-  margin: 0;
   max-width: 760px;
+  margin: 0;
 }
 
 .eyebrow {
@@ -66,9 +66,13 @@ p {
 .chart-card {
   min-width: 0;
   padding: 28px;
-  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 14px;
+  background: var(--surface);
+}
+
+.chart-card + .chart-card {
+  margin-top: 28px;
 }
 
 #filters_screen {
