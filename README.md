@@ -1,26 +1,65 @@
-# T06: Interactive TV Energy Consumption Histogram
+# T06: TV Energy Consumption Explorer
 
-An interactive D3 histogram exploring annual TV energy consumption
-across LCD, LED and OLED screen technologies.
+An interactive D3 webpage exploring TV energy consumption,
+energy star ratings, screen technologies and screen sizes.
+
+Built for COS30045 Data Visualisation, T06-1 and T06-2.
 
 ## Features
 
-- Screen technology filters: All TVs, LED, LCD and OLED
-- Fixed 200 kWh/year bin intervals
-- Fixed axis domains for comparison across filters
-- Animated bar updates
-- Pointer and keyboard-focus tooltips
-- Responsive chart dimensions
-- Reduced-motion preference support
+### Interactive Histogram
+
+- Displays the frequency of annual TV energy consumption.
+- Uses fixed 200 kWh/year intervals.
+- Filters records using All TVs, LED, LCD and OLED buttons.
+- Animates bar heights when the selected technology changes.
+- Keeps axis domains and bin boundaries fixed for comparison.
+- Shows interval details on hover or keyboard focus.
+
+### Colour-Coded Scatterplot
+
+- X-axis: energy star rating.
+- Y-axis: annual energy consumption in kWh/year.
+- Blue points: LED.
+- Orange points: LCD.
+- Green points: OLED.
+- Hover tooltips display screen size in inches.
+- Semi-transparent points help reveal overlapping records.
+
+The technology buttons filter the histogram only.
 
 ## Technologies
 
-HTML, CSS, JavaScript and D3.js v7.
+- HTML
+- CSS
+- JavaScript
+- D3.js v7
+- ResizeObserver
+
+## Project Structure
+
+```text
+T06/
+├── index.html
+├── README.md
+├── css/
+│   ├── base.css
+│   └── visualisations.css
+├── data/
+│   └── Ex6_TVdata.csv
+└── js/
+    ├── shared-constants.js
+    ├── histogram.js
+    ├── scatterplot.js
+    ├── interactions.js
+    └── load-data.js
+```
 
 ## Dataset
 
-The project uses `data/Ex6_TVdata.csv`, supplied with the
-COS30045 T06 starter pack.
+The project uses `Ex6_TVdata.csv`, supplied with the COS30045
+T06 exercise materials. The supplied materials identify the
+dataset as downloaded in January 2025.
 
 | Screen Technology | Records |
 |---|---:|
@@ -29,23 +68,43 @@ COS30045 T06 starter pack.
 | OLED | 256 |
 | Total | 3,703 |
 
-Annual energy consumption is measured in kWh/year.
+### Columns
+
+| Column | Description |
+|---|---|
+| brand | TV brand |
+| model | TV model |
+| screenSize | Screen size in inches |
+| screenTech | Screen technology |
+| energyConsumption | Annual energy consumption in kWh/year |
+| star | Energy star rating |
+
 Frequency represents CSV record counts, not sales or households.
-
-## How It Works
-
-D3 groups energy consumption values into equal-width bins.
-Selecting a screen technology filters the records and recalculates
-the bin frequencies.
-
-Bin boundaries and axis domains remain fixed across filters.
-ResizeObserver redraws the chart when its container width changes
-while preserving the selected filter.
 
 ## Run Locally
 
-1. Open the project folder in Visual Studio Code.
-2. Open `index.html` using Live Server.
-3. Use the filter buttons to explore the dataset.
+1. Download or clone the repository.
+2. Open the project folder in Visual Studio Code.
+3. Open `index.html` using the Live Server extension.
+4. Use the filter buttons and hover over chart elements.
 
-A local web server is required to load the CSV reliably.
+A local web server is required so the browser can load the CSV.
+
+## Implementation
+
+The CSV is loaded once and numeric fields are converted to numbers.
+
+D3 groups energy values into fixed intervals for the histogram.
+Selecting a technology filters the records, recalculates bin
+frequencies and animates the bars.
+
+The scatterplot uses independent scales, a categorical colour
+scale and an SVG tooltip that displays screen size.
+
+Both charts redraw when their container widths change.
+The histogram preserves its selected filter during resizing.
+
+## References
+
+- COS30045 T06 exercise instructions and supplied code.
+- COS30045 T06 TV dataset.
