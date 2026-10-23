@@ -1,63 +1,84 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Responsive D3 Chart</title>
+  <title>TV Energy Consumption Explorer</title>
 
-    <!-- CSS files -->
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/visualisations.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/visualisations.css">
 </head>
 
 <body>
+  <header>
+    <div class="page-width">
+      <h1>TV Energy Consumption Explorer</h1>
+      <p>
+        Explore the distribution of annual energy consumption
+        across LCD, LED and OLED televisions.
+      </p>
+    </div>
+  </header>
 
-    <header>
-        <h1>TV Energy Consumption</h1>
-    </header>
+  <main class="page-width">
+    <section class="chart-card" aria-labelledby="chart-heading">
+      <h2 id="chart-heading">Annual TV Energy Consumption</h2>
 
-    <main>
-        <div>
-            <h1>Energy Consumption for Different TV Screen Types and Sizes</h1>
+      <p>
+        Select a screen technology to explore its distribution.
+        Each bar counts records within a 200 kWh/year interval.
+      </p>
 
-            <p>TV's vary considerably in energy consumption.</p>
+      <div
+        id="filters_screen"
+        role="group"
+        aria-label="Filter by screen technology"
+      ></div>
 
-            <!-- Div for filter buttons -->
-            <div id="filters_screen"></div>
+      <p id="chart-summary" role="status" aria-live="polite">
+        Loading TV records...
+      </p>
 
-            <!-- Div for histogram -->
-            <div id="histogram" class="responsive-svg-container"></div>
+      <div
+        id="histogram"
+        class="responsive-svg-container"
+      ></div>
 
-            <!-- Data source -->
-            <div class="body">
-                <h3>Data source</h3>
+      <p class="chart-note">
+        Both axes remain fixed when filtering to support comparison.
+        Hover over a bar, or focus it using the Tab key, to inspect
+        its interval and record count.
+      </p>
+    </section>
 
-                <p>
-                    <a href="https://data.gov.au/data/dataset/559708e5-480e-4f94-8429-c4">
-                        Energy Rating Data for Household Appliances - Televisions
-                    </a>
-                    <br>
-                    Downloaded Jan 2025
-                </p>
-            </div>
-        </div>
-    </main>
+    <section class="notes" aria-labelledby="notes-heading">
+      <h2 id="notes-heading">Data Sources and Notes</h2>
 
-    <footer>
-        <p>&copy; 2025 Data Visualisation Week 6</p>
-    </footer>
+      <p>
+        Source: Ex6_TVdata.csv, supplied with the COS30045 T06
+        starter pack. The supplied materials identify the data
+        as downloaded in January 2025.
+      </p>
 
-    <!-- D3.js library -->
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+      <p>
+        Energy consumption is measured in kWh/year.
+        Frequency counts CSV records, not sales or households.
+        Intervals include their lower boundary and exclude their
+        upper boundary, except the final interval, which includes both.
+      </p>
+    </section>
+  </main>
 
-    <!-- JavaScript files -->
-    <script src="js/load-data.js"></script>
-    <script src="js/shared-constants.js"></script>
-    <script src="js/interactions.js"></script>
-    <script src="js/histogram.js"></script>
+  <footer>
+    <p>COS30045 Data Visualisation · T06 Interactive Histogram</p>
+  </footer>
 
+  <!-- Load dependencies before the data initialisation script. -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="js/shared-constants.js"></script>
+  <script src="js/interactions.js"></script>
+  <script src="js/histogram.js"></script>
+  <script src="js/load-data.js"></script>
 </body>
 </html>

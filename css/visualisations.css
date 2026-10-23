@@ -1,0 +1,66 @@
+.responsive-svg-container {
+  width: 100%;
+  min-width: 0;
+}
+
+.responsive-svg-container svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: white;
+}
+
+.axis text {
+  fill: #574638;
+  font-size: 11px;
+}
+
+.axis path,
+.axis line {
+  stroke: #8a796b;
+}
+
+.axis-label {
+  fill: #443125;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+}
+
+.grid line {
+  stroke: #eee6de;
+}
+
+.grid .domain {
+  display: none;
+}
+
+.bar {
+  fill: #606464;
+  stroke: white;
+  stroke-width: 1;
+}
+
+.bar:hover,
+.bar:focus {
+  fill: #a74412;
+}
+
+.bar:focus-visible {
+  outline: 2px solid #235b88;
+}
+
+.chart-tooltip {
+  position: fixed;
+  z-index: 1000;
+  visibility: hidden;
+  pointer-events: none;
+  max-width: min(260px, calc(100vw - 16px));
+  padding: 10px 12px;
+  border-radius: 7px;
+  background: #30261e;
+  color: white;
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-line;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 18%);
+}
